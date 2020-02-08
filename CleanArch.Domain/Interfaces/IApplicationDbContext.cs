@@ -1,4 +1,5 @@
 ﻿using CleanArch.Domain.Entities;
+using CleanArch.Domain.Entities.ProductAggregation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -12,6 +13,9 @@ namespace CleanArch.Domain.Interfaces
     public interface IApplicationDbContext : IDisposable
     {
         DbSet<Permission> Permissions { get; set; }
+        DbSet<Product> Products { get; set; }
+        DbSet<ProductTranslation> ProductTranslation { get; set; }
+        DbSet<Language> Languages { get; set; }
 
         DbSet<TEntity> WriterSet<TEntity>() where TEntity : EntityBase;
         IQueryable<TEntity> ReaderSet<TEntity>(bool includeDeleted = false) where TEntity : EntityBase;

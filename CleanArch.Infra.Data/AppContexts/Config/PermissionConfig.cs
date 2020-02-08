@@ -9,12 +9,14 @@ namespace CleanArch.Infra.Data.AppContexts.Config
         public void Configure(EntityTypeBuilder<Permission> builder)
         {
             var navigation = builder.Metadata.FindNavigation(nameof(Permission.Roles));
-            navigation.SetPropertyAccessMode(PropertyAccessMode.PreferProperty);
+            navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
 
             builder.HasKey(x => x.Id);
             builder.Property(b => b.Name)
                 .IsRequired()
                 .HasMaxLength(40);
+
+            builder.HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
         }
     }
 }

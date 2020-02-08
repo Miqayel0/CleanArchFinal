@@ -1,4 +1,5 @@
 ﻿using CleanArch.Domain.Entities;
+using CleanArch.Domain.Entities.ProductAggregation;
 using CleanArch.Domain.Identity;
 using CleanArch.Domain.Interfaces;
 using IdentityServer4.EntityFramework.Options;
@@ -24,7 +25,11 @@ namespace CleanArch.Infra.Data.AppContexts
             _identityService = identityService;
         }
 
-        public DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ProductTranslation> ProductTranslation { get; set; }
+        public virtual DbSet<Language> Languages { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

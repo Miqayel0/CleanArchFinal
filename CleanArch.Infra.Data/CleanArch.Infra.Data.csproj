@@ -9,6 +9,12 @@
     <Compile Remove="Migrations\20200112185926_AppRoleMigr.Designer.cs" />
     <Compile Remove="Migrations\20200112201050_test1.cs" />
     <Compile Remove="Migrations\20200112201050_test1.Designer.cs" />
+    <Compile Remove="Migrations\20200204203657_ProductMigration.cs" />
+    <Compile Remove="Migrations\20200204203657_ProductMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200206192851_ProductMigration.cs" />
+    <Compile Remove="Migrations\20200206192851_ProductMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200206201849_ProodCatMig.cs" />
+    <Compile Remove="Migrations\20200206201849_ProodCatMig.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
