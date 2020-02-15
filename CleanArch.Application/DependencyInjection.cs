@@ -13,11 +13,16 @@ namespace CleanArch.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
-            services.AddScoped<IAuthorizationHandler, CanModifyUserHandler>();
+
+            services.AddScoped<IAuthorizationHandler, CanModifyHandler>();
+            services.AddScoped<IAuthorizationHandler, CanCreateHandler>();
+
             services.AddAuthorizationCore(options =>
             {
-                options.AddPolicy(nameof(AppPerrmision.CanModifyUser), policy =>
-                    policy.Requirements.Add(new CanModifyUserRequirament()));
+                options.AddPolicy(nameof(AppPermission.CanModifyUser), policy =>
+                    policy.Requirements.Add(new CanModifyRequirament()));
+                options.AddPolicy(nameof(AppPermission.CanCreate), policy =>
+                    policy.Requirements.Add(new CanCreateRequirament()));
             });
             
             return services;

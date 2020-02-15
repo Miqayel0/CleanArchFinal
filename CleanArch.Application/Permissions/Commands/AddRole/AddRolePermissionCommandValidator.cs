@@ -7,7 +7,7 @@ namespace CleanArch.Application.Permissions.Commands.AddRole
         public AddRolePermissionCommandValidator()
         {
             RuleFor(x => x.PermissionId).NotEmpty();
-            RuleFor(x => x.Roles).NotEmpty();
+            RuleFor(x => x.RoleIds).NotEmpty();
         }
     }
 }

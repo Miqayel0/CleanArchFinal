@@ -1,4 +1,5 @@
 ﻿using CleanArch.Domain.Entities;
+using CleanArch.Domain.Entities.PermissionAggregation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,7 +9,7 @@ namespace CleanArch.Infra.Data.AppContexts.Config
     {
         public void Configure(EntityTypeBuilder<Permission> builder)
         {
-            var navigation = builder.Metadata.FindNavigation(nameof(Permission.Roles));
+            var navigation = builder.Metadata.FindNavigation(nameof(Permission.PermissionRoles));
             navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
 
             builder.HasKey(x => x.Id);

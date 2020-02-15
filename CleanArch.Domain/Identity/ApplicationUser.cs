@@ -6,6 +6,7 @@ namespace CleanArch.Domain.Identity
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public string Photo { get; set; }
+        public string PictureUri { get; set; }
+        public bool IsDeleted { get; set; }
     } 
 }

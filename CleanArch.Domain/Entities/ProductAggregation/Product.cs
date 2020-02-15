@@ -6,13 +6,33 @@ namespace CleanArch.Domain.Entities.ProductAggregation
 {
     public class Product : EntityBase, IAggregateRoot
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string PictureUri { get; set; }
-        public decimal UnitPrice { get; set; }
-        public long CategoryId { get; set; }
-        public virtual Category Category { get; set; }
+        public string Name { get; }
+        public string Description { get; }
+        public string PictureUri { get; }
+        public decimal UnitPrice { get; }
+        public long CategoryId { get; }
+        public virtual Category Category { get; }
         public IReadOnlyCollection<ProductTranslation> Translations => _translations.AsReadOnly();
+
+        public Product(
+            string name,
+            string description,
+            string pictureUri,
+            decimal unitPrice,
+            long categoryId,
+            List<ProductTranslation> translations)
+        {
+            Name = name;
+            Description = description;
+            PictureUri = pictureUri;
+            UnitPrice = unitPrice;
+            CategoryId = categoryId;
+            _translations = translations;
+        }
+
+        public Product()
+        {
+        }
 
         #region Privete fields
 

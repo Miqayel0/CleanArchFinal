@@ -1,6 +1,7 @@
 ﻿using CleanArch.Application.Authentication.Requirements;
 using CleanArch.Application.Permissions;
 using CleanArch.Domain.Entities;
+using CleanArch.Domain.Entities.PermissionAggregation;
 using CleanArch.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -9,21 +10,21 @@ using System.Threading.Tasks;
 
 namespace CleanArch.Application.Authentication.Handlers
 {
-    public class CanModifyUserHandler : AuthorizationHandler<CanModifyUserRequirament>
+    public class CanModifyHandler : AuthorizationHandler<CanModifyRequirament>
     {
         private readonly IAsyncRepository _repository;
 
-        public CanModifyUserHandler(IAsyncRepository repository)
+        public CanModifyHandler(IAsyncRepository repository)
         {
             _repository = repository;
         }
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, CanModifyUserRequirament requirement)
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, CanModifyRequirament requirement)
         {
             var roles = await _repository
-                 .Filter<Permission>(x => x.Name == nameof(AppPerrmision.CanModifyUser))
-                 .SelectMany(x => x.Roles)
-                 .Select(x => x.Name)
+                 .Filter<Permission>(x => x.Name == nameof(AppPermission.CanModifyUser))
+                 .SelectMany(x => x.PermissionRoles)
+                 .Select(x => x.Role.Name)
                  .ToListAsync();
 
             foreach (var item in roles)

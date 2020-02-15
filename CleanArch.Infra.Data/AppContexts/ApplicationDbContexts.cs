@@ -1,4 +1,6 @@
 ﻿using CleanArch.Domain.Entities;
+using CleanArch.Domain.Entities.CategoryAggregation;
+using CleanArch.Domain.Entities.PermissionAggregation;
 using CleanArch.Domain.Entities.ProductAggregation;
 using CleanArch.Domain.Identity;
 using CleanArch.Domain.Interfaces;
@@ -26,8 +28,11 @@ namespace CleanArch.Infra.Data.AppContexts
         }
 
         public virtual DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<PermissionRole> PermissionRoles { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductTranslation> ProductTranslation { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<CategoryTranslation> CategoryTranslations { get; set; }
         public virtual DbSet<Language> Languages { get; set; }
 
 

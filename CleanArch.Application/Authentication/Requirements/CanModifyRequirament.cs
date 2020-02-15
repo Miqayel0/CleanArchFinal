@@ -2,7 +2,7 @@
 
 namespace CleanArch.Application.Authentication.Requirements
 {
-    public class CanModifyUserRequirament : IAuthorizationRequirement
+    public class CanModifyRequirament : IAuthorizationRequirement
     {
     }
 }

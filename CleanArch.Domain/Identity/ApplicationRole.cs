@@ -1,11 +1,19 @@
 ﻿using CleanArch.Domain.Entities;
+using CleanArch.Domain.Entities.PermissionAggregation;
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace CleanArch.Domain.Identity
 {
     public class ApplicationRole : IdentityRole
     {
-        public long? PermissionId { get; set; }
-        public Permission Permission { get; set; }
+        public bool IsDeleted { get; set; }
+        public IReadOnlyCollection<PermissionRole> PermissionRoles => _permissionRoles.AsReadOnly();
+
+        #region Private fields
+
+        private List<PermissionRole> _permissionRoles = new List<PermissionRole>();
+
+        #endregion
     }
 }

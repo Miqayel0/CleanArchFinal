@@ -2,11 +2,23 @@
 {
     public class ProductTranslation : EntityBase
     {
-        public string PropertyKey { get; set; }
-        public string PropertyValue { get; set; }
-        public long ProductId { get; set; }
-        public long LanguageId { get; set; }
-        public virtual Language Language { get; set; }
-        public virtual Product Product { get; set; }
+
+        public string PropertyKey { get; }
+        public string PropertyValue { get; }
+        public long ProductId { get; }
+        public long LanguageId { get; }
+        public virtual Language Language { get; }
+        public virtual Product Product { get; }
+
+        public ProductTranslation(string propertyKey, string propertyValue, long languageId)
+        {
+            PropertyKey = propertyKey;
+            PropertyValue = propertyValue;
+            LanguageId = languageId;
+        }
+
+        public ProductTranslation()
+        {
+        }
     }
 }

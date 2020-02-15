@@ -11,12 +11,13 @@ namespace CleanArch.Application.Products.Commands.Create
         public decimal UnitPrice { get; set; }
         public long CategoryId { get; set; }
 
-        public List<CreateProductTraslationDto> Translations { get; set; }
+        public List<CreateProductTranslationDto> Translations { get; set; }
     }
 
-    public class CreateProductTraslationDto
+    public class CreateProductTranslationDto
     {
         public string PropertyKey { get; set; }
         public string PropertyValue { get; set; }
+        public long LanguageId { get; set; }
     }
 }

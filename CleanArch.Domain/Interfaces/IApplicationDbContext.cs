@@ -1,4 +1,6 @@
 ﻿using CleanArch.Domain.Entities;
+using CleanArch.Domain.Entities.CategoryAggregation;
+using CleanArch.Domain.Entities.PermissionAggregation;
 using CleanArch.Domain.Entities.ProductAggregation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -15,6 +17,10 @@ namespace CleanArch.Domain.Interfaces
         DbSet<Permission> Permissions { get; set; }
         DbSet<Product> Products { get; set; }
         DbSet<ProductTranslation> ProductTranslation { get; set; }
+        DbSet<Category> Categories { get; set; }
+        DbSet<CategoryTranslation> CategoryTranslations { get; set; }
+
+        DbSet<PermissionRole> PermissionRoles { get; set; }
         DbSet<Language> Languages { get; set; }
 
         DbSet<TEntity> WriterSet<TEntity>() where TEntity : EntityBase;

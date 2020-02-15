@@ -2,11 +2,23 @@
 {
     public class CategoryTranslation : EntityBase
     {
-        public string PropertyKey { get; set; }
-        public string PropertyValue { get; set; }
-        public long CategoryId { get; set; }
-        public long LanguageId { get; set; }
-        public virtual Language Language { get; set; }
-        public virtual Category Category { get; set; }
+
+        public string PropertyKey { get; }
+        public string PropertyValue { get; }
+        public long CategoryId { get; }
+        public long LanguageId { get; }
+        public virtual Language Language { get; }
+        public virtual Category Category { get; }
+
+        public CategoryTranslation(string propertyKey, string propertyValue, long languageId)
+        {
+            PropertyKey = propertyKey;
+            PropertyValue = propertyValue;
+            LanguageId = languageId;
+        }
+
+        public CategoryTranslation()
+        {
+        }
     }
 }

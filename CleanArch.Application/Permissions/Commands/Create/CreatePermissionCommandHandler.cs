@@ -1,4 +1,5 @@
 ﻿using CleanArch.Domain.Entities;
+using CleanArch.Domain.Entities.PermissionAggregation;
 using CleanArch.Domain.Interfaces;
 using MediatR;
 using System.Threading;

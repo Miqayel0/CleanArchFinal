@@ -4,14 +4,16 @@ using CleanArch.Infra.Data.AppContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CleanArch.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200209195110_RoleMig")]
+    partial class RoleMig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,7 +57,7 @@ namespace CleanArch.Infra.Data.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("CleanArch.Domain.Entities.CategoryAggregation.CategoryTranslation", b =>
@@ -106,7 +108,7 @@ namespace CleanArch.Infra.Data.Migrations
 
                     b.HasIndex("PropertyValue");
 
-                    b.ToTable("CategoryTranslations");
+                    b.ToTable("CategoryTranslation");
                 });
 
             modelBuilder.Entity("CleanArch.Domain.Entities.Language", b =>
@@ -206,7 +208,7 @@ namespace CleanArch.Infra.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("PermissionRoles");
+                    b.ToTable("PermissionRole");
                 });
 
             modelBuilder.Entity("CleanArch.Domain.Entities.ProductAggregation.Product", b =>
@@ -225,6 +227,9 @@ namespace CleanArch.Infra.Data.Migrations
                     b.Property<DateTime>("CreatedDt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -232,6 +237,9 @@ namespace CleanArch.Infra.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
+
+                    b.Property<string>("PictureUri")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
