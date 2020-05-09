@@ -8,7 +8,6 @@ namespace CleanArch.Infra.Data.AppContexts.Config
     {
         public void Configure(EntityTypeBuilder<ApplicationRole> builder)
         {
-            builder.HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
         }
     }
 }

@@ -17,7 +17,6 @@ namespace CleanArch.Infra.Data.AppContexts.Config
                 .HasMaxLength(50)
                 .IsRequired();
 
-            builder.HasQueryFilter(m => EF.Property<bool>(m, "IsDeleted") == false);
         }
     }
 }
