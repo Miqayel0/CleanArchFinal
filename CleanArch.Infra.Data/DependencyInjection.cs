@@ -40,7 +40,7 @@ namespace CleanArch.Infra.Data
                     options.AppSecret = "2edab70909c3ed95e44f71af5c5815eb";
                 });
 
-            services.AddScoped<IAsyncRepository, AsyncRepository>();
+            services.AddScoped<IRepository, AsyncRepository>();
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
             services.AddScoped<IJwtService, JwtTokenFactory>();
             services.AddScoped<IIdentityService, IdentityService>();

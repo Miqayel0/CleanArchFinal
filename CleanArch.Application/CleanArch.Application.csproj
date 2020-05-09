@@ -5,8 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Permissions\Queries\**" />
+    <EmbeddedResource Remove="Permissions\Queries\**" />
+    <None Remove="Permissions\Queries\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Account\Queries\" />
-    <Folder Include="Permissions\Queries\" />
     <Folder Include="Roles\Queries\" />
     <Folder Include="Users\Queries\" />
   </ItemGroup>

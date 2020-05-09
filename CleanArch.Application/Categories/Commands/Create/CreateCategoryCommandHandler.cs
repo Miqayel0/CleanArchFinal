@@ -10,9 +10,9 @@ namespace CleanArch.Application.Categories.Commands.Create
 {
     public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, bool>
     {
-        private readonly IAsyncRepository _repository;
+        private readonly IRepository _repository;
 
-        public CreateCategoryCommandHandler(IAsyncRepository repository)
+        public CreateCategoryCommandHandler(IRepository repository)
         {
             _repository = repository;
         }

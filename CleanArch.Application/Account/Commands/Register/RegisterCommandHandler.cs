@@ -1,4 +1,5 @@
-﻿using CleanArch.Domain.Exeptions;
+﻿using CleanArch.Application.Roles;
+using CleanArch.Domain.Exeptions;
 using CleanArch.Domain.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -36,7 +37,7 @@ namespace CleanArch.Application.Account.Commands.Register
                     if (!userResult.Succeeded)
                         throw new SmartException(string.Join(Environment.NewLine, userResult.Errors));
 
-                    var roleResult = await _userManager.AddToRoleAsync(user, "User");
+                    var roleResult = await _userManager.AddToRoleAsync(user, Role.User.ToString());
                     if (!roleResult.Succeeded)
                         throw new SmartException(string.Join(Environment.NewLine, roleResult.Errors));
 

@@ -10,8 +10,8 @@ namespace CleanArch.Application.Products.Commands.Create
 {
     public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, bool>
     {
-        private readonly IAsyncRepository _repository;
-        public CreateProductCommandHandler(IAsyncRepository repository)
+        private readonly IRepository _repository;
+        public CreateProductCommandHandler(IRepository repository)
         {
             _repository = repository;
         }
