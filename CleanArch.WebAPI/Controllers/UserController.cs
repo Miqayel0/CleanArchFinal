@@ -11,7 +11,7 @@ namespace CleanArch.WebAPI.Controllers
     //[Authorize]
     public class UserController : BaseController
     {
-        [Authorize(Policy = Permission.Users.Create)]
+        //[Authorize(Policy = Permission.Users.Create)]
         [HttpPost]
         public async Task<ActionResult<bool>> Create([FromBody] CreateUserCommand request)
         {

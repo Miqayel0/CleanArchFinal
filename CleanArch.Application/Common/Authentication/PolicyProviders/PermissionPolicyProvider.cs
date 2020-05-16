@@ -1,4 +1,4 @@
-﻿using CleanArch.Application.Authentication.Requirements;
+﻿using CleanArch.Application.Common.Authentication.Requirements;
 using CleanArch.Domain.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;

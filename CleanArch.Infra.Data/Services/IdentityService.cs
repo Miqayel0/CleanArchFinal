@@ -9,7 +9,7 @@ namespace CleanArch.Infra.Data.Services
 {
     public class IdentityService : IIdentityService
     {
-        private IHttpContextAccessor _context;
+        private readonly IHttpContextAccessor _context;
 
         public IdentityService(IHttpContextAccessor context)
         {
@@ -23,7 +23,7 @@ namespace CleanArch.Infra.Data.Services
 
         public string UserName
         {
-            get => _context.HttpContext.User.Identity.Name;
+            get => _context.HttpContext?.User?.Identity?.Name;
         }
 
         public string Language

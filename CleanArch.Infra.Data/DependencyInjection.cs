@@ -33,12 +33,7 @@ namespace CleanArch.Infra.Data
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddAuthentication()
-                .AddIdentityServerJwt()
-                .AddFacebook(options =>
-                {
-                    options.AppId = "3005408369483136";
-                    options.AppSecret = "2edab70909c3ed95e44f71af5c5815eb";
-                });
+                .AddIdentityServerJwt();
 
             services.AddScoped<IRepository, AsyncRepository>();
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();

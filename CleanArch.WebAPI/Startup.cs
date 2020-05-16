@@ -1,6 +1,9 @@
 using CleanArch.Application;
 using CleanArch.Application.Account.Commands.Login;
+using CleanArch.Application.Products.Commands.Hubs;
 using CleanArch.Infra.Data;
+using CleanArch.Infra.Data.AppContexts;
+using CleanArch.WebAPI.Filters;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,7 +30,10 @@ namespace CleanArch.WebAPI
         {
             services.AddInfrastructure(Configuration);
             services.AddApplication();
+
             services.AddHttpContextAccessor();
+            services.AddSignalR();
+
             services.AddOpenApiDocument(document =>
             {
                 document.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
@@ -42,7 +48,9 @@ namespace CleanArch.WebAPI
                     new AspNetCoreOperationSecurityScopeProcessor("JWT"));
             });
 
-            services.AddControllers()
+            services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
+
+            services.AddControllers(options => options.Filters.Add(new ApiExceptionFilter()))
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginCommandValidator>());
         }
 
@@ -54,8 +62,8 @@ namespace CleanArch.WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHealthChecks("/health");
             app.UseHttpsRedirection();
-
             app.UseOpenApi();
             app.UseSwaggerUi3();
 
@@ -67,6 +75,7 @@ namespace CleanArch.WebAPI
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ProductHub>("/productHub");
                 endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller}/{action=Index}/{id?}");

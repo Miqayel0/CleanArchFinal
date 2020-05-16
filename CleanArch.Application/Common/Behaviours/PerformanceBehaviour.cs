@@ -1,6 +1,8 @@
-﻿using MediatR;
+﻿using CleanArch.Domain.Identity;
+using CleanArch.Domain.Interfaces;
+using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using CleanArchitecture.Application.Common.Interfaces;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,18 +13,12 @@ namespace CleanArch.Application.Common.Behaviours
     {
         private readonly Stopwatch _timer;
         private readonly ILogger<TRequest> _logger;
-        private readonly ICurrentUserService _currentUserService;
         private readonly IIdentityService _identityService;
 
-        public PerformanceBehaviour(
-            ILogger<TRequest> logger, 
-            ICurrentUserService currentUserService,
-            IIdentityService identityService)
+        public PerformanceBehaviour(ILogger<TRequest> logger, IIdentityService identityService)
         {
             _timer = new Stopwatch();
-
             _logger = logger;
-            _currentUserService = currentUserService;
             _identityService = identityService;
         }
 
@@ -38,14 +34,9 @@ namespace CleanArch.Application.Common.Behaviours
 
             if (elapsedMilliseconds > 500)
             {
-                var requestName = typeof(TRequest).Name;
-                var userId = _currentUserService.UserId ?? string.Empty;
-                var userName = string.Empty;
-
-                if (!string.IsNullOrEmpty(userId))
-                {
-                    userName = await _identityService.GetUserNameAsync(userId);
-                }
+                string requestName = typeof(TRequest).Name;
+                string userId = _identityService.UserIdentity ?? string.Empty;
+                string userName = _identityService.UserName ?? string.Empty;
 
                 _logger.LogWarning("CleanArchitecture Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@UserName} {@Request}",
                     requestName, elapsedMilliseconds, userId, userName, request);
