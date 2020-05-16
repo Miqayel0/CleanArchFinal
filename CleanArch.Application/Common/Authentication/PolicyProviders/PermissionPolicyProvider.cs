@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
 
-namespace CleanArch.Application.Authentication.PolicyProviders
+namespace CleanArch.Application.Common.Authentication.PolicyProviders
 {
     public class PermissionPolicyProvider : IAuthorizationPolicyProvider
     {

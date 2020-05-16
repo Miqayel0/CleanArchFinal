@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CleanArch.Application.Authentication.Handlers
+namespace CleanArch.Application.Common.Authentication.Handlers
 {
     public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
     {

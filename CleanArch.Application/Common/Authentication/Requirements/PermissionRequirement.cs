@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-namespace CleanArch.Application.Authentication.Requirements
+namespace CleanArch.Application.Common.Authentication.Requirements
 {
     public class PermissionRequirement : IAuthorizationRequirement
     {
