@@ -18,7 +18,7 @@ namespace CleanArch.Application.Permissions.Commands.Create
 
         public async Task<bool> Handle(CreatePermissionCommand request, CancellationToken cancellationToken)
         {
-            await _repository.Create(new Permission { Name = request.Name });
+            await _repository.Create(new Permission(request.Name));
             await _repository.CompleteAsync(cancellationToken);
             return true;
         }

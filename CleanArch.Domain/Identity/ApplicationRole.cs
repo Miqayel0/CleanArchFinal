@@ -12,7 +12,7 @@ namespace CleanArch.Domain.Identity
 
         #region Private fields
 
-        private List<PermissionRole> _permissionRoles = new List<PermissionRole>();
+        private readonly List<PermissionRole> _permissionRoles = new List<PermissionRole>();
 
         #endregion
     }
