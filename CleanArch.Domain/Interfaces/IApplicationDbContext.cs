@@ -19,7 +19,7 @@ namespace CleanArch.Domain.Interfaces
         DbSet<CategoryTranslation> CategoryTranslations { get; set; }
         DbSet<Language> Languages { get; set; }
         DbSet<TEntity> WriterSet<TEntity>() where TEntity : EntityBase;
-        IQueryable<TEntity> ReaderSet<TEntity>(bool includeDeleted = false) where TEntity : EntityBase;
+        IQueryable<TEntity> ReaderSet<TEntity>() where TEntity : EntityBase;
         Task<int> SaveChangesAsync(CancellationToken token = default);
         int SaveChanges();
         int SaveChangesWithoutTimeShtamp();

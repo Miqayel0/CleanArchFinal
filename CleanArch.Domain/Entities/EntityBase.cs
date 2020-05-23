@@ -1,6 +1,6 @@
-﻿using System;
+﻿using CleanArch.Domain.Events;
+using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CleanArch.Domain.Entities
 {
@@ -12,5 +12,7 @@ namespace CleanArch.Domain.Entities
         public string UpdatedBy { get; set; }
         public DateTime UpdatedDt { get; set; }
         public bool IsDeleted { get; set; }
+
+        public List<BaseDomainEvent> Events = new List<BaseDomainEvent>();
     }
 }

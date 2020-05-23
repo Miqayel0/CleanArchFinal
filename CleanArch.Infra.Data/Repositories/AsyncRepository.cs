@@ -22,64 +22,64 @@ namespace CleanArch.Infra.Data.Repositories
 
         #region Async Read Part
 
-        public async Task<IEnumerable<T>> GetAllAsync<T>(bool includeDeleted = false, params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
+        public async Task<IEnumerable<T>> GetAllAsync<T>(params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
         {
-            var set = _context.ReaderSet<T>(includeDeleted);
+            var set = _context.ReaderSet<T>();
             if (includeExpression.Any())
                 set = includeExpression.Aggregate(set, (current, variable) => current.Include(variable));
             return await set.ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsNoTrackingAsync<T>(bool includeDeleted = false, params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
+        public async Task<IEnumerable<T>> GetAllAsNoTrackingAsync<T>(params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
         {
-            var set = _context.ReaderSet<T>(includeDeleted).AsNoTracking();
+            var set = _context.ReaderSet<T>().AsNoTracking();
             if (includeExpression.Any())
                 set = includeExpression.Aggregate(set, (current, include) => current.Include(include));
             return await set.ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetByPagingAsNoTrackingAsync<T>(bool includeDeleted = false, int page = 1, int pageSize = 10,
+        public async Task<IEnumerable<T>> GetByPagingAsNoTrackingAsync<T>(int page = 1, int pageSize = 10,
             params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
         {
-            var set = _context.ReaderSet<T>(includeDeleted).Skip(page * pageSize).Take(pageSize).AsNoTracking();
+            var set = _context.ReaderSet<T>().Skip(page * pageSize).Take(pageSize).AsNoTracking();
             if (includeExpression.Any())
                 set = includeExpression.Aggregate(set, (current, include) => current.Include(include));
             return await set.ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync<T>(long id, bool includeDeleted = false, params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
+        public async Task<T> GetByIdAsync<T>(long id, params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
         {
-            var set = _context.ReaderSet<T>(includeDeleted).Where(x => x.Id == id);
+            var set = _context.ReaderSet<T>().Where(x => x.Id == id);
             if (includeExpression.Any())
                 set = includeExpression.Aggregate(set, (current, variable) => current.Include(variable));
             return await set.FirstOrDefaultAsync();
         }
 
-        public async Task<T> GetByIdAsNoTrackingAsync<T>(long id, bool includeDeleted = false, params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
+        public async Task<T> GetByIdAsNoTrackingAsync<T>(long id, params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
         {
-            var set = _context.ReaderSet<T>(includeDeleted).Where(x => x.Id == id).AsNoTracking();
+            var set = _context.ReaderSet<T>().Where(x => x.Id == id).AsNoTracking();
             if (includeExpression.Any())
                 set = includeExpression.Aggregate(set, (current, variable) => current.Include(variable));
             return await set.FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<T>> FilterAsNoTrackingAsync<T>(Expression<Func<T, bool>> query, bool includeDeleted = false,
+        public async Task<IEnumerable<T>> FilterAsNoTrackingAsync<T>(Expression<Func<T, bool>> query,
             params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
         {
             if (query == null)
                 throw new SmartException("Query is null");
-            var set = _context.ReaderSet<T>(includeDeleted).Where(query).AsNoTracking();
+            var set = _context.ReaderSet<T>().Where(query).AsNoTracking();
             if (includeExpression.Any())
                 set = includeExpression.Aggregate(set, (current, variable) => current.Include(variable));
             return await set.ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> FilterAsync<T>(Expression<Func<T, bool>> query, bool includeDeleted = false,
+        public async Task<IEnumerable<T>> FilterAsync<T>(Expression<Func<T, bool>> query,
             params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
         {
             if (query == null)
                 throw new SmartException("Query is null");
-            var set = _context.ReaderSet<T>(includeDeleted).Where(query);
+            var set = _context.ReaderSet<T>().Where(query);
             if (includeExpression.Any())
                 set = includeExpression.Aggregate(set, (current, variable) => current.Include(variable));
             return await set.ToListAsync();
@@ -87,14 +87,14 @@ namespace CleanArch.Infra.Data.Repositories
 
 
         public async Task<IEnumerable<T>> FilterWithQueryAsync<T>(Expression<Func<T, bool>> query,
-            Func<IQueryable<T>, IQueryable<T>> includeMembers, bool includeDeleted = false) where T : EntityBase
+            Func<IQueryable<T>, IQueryable<T>> includeMembers) where T : EntityBase
         {
-            var set = _context.ReaderSet<T>(includeDeleted).Where(query);
+            var set = _context.ReaderSet<T>().Where(query);
             var result = includeMembers(set);
             return await result.ToListAsync();
         }
 
-        public async Task<T> GetAndCheckWithAssignerWithQueryAsync<T>(long entityId, string assignerId, Func<IQueryable<T>, IQueryable<T>> includeMembers, bool includeDeleted = false) where T : EntityBase
+        public async Task<T> GetAndCheckWithAssignerWithQueryAsync<T>(long entityId, string assignerId, Func<IQueryable<T>, IQueryable<T>> includeMembers) where T : EntityBase
         {
             var set = _context.ReaderSet<T>().Where(c => c.Id == entityId && c.CreatedBy == assignerId);
             var result = includeMembers(set);
@@ -105,74 +105,73 @@ namespace CleanArch.Infra.Data.Repositories
 
         #region Sync Read Part
 
-        public IQueryable<T> GetAll<T>(bool includeDeleted = false, params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
+        public IQueryable<T> GetAll<T>(params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
         {
-            var set = _context.ReaderSet<T>(includeDeleted);
+            var set = _context.ReaderSet<T>();
             if (includeExpression.Any())
                 set = includeExpression.Aggregate(set, (current, variable) => current.Include(variable));
             return set;
         }
 
-        public IQueryable<T> GetAllAsNoTracking<T>(bool includeDeleted = false, params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
+        public IQueryable<T> GetAllAsNoTracking<T>(params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
         {
-            var set = _context.ReaderSet<T>(includeDeleted).AsNoTracking();
+            var set = _context.ReaderSet<T>().AsNoTracking();
             if (includeExpression.Any())
                 set = includeExpression.Aggregate(set, (current, variable) => current.Include(variable));
             return set;
         }
 
-        public IQueryable<T> GetByPagingAsNoTracking<T>(int page = 1, int pageSize = 10, bool includeDeleted = false,
-            params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
+        public IQueryable<T> GetByPagingAsNoTracking<T>(int page = 1, int pageSize = 10, params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
         {
-            var set = _context.ReaderSet<T>(includeDeleted).Skip(page * pageSize).Take(pageSize)
+            var set = _context.ReaderSet<T>().Skip(page * pageSize).Take(pageSize)
                 .AsNoTracking();
             if (includeExpression.Any())
                 set = includeExpression.Aggregate(set, (current, include) => current.Include(include));
             return set;
         }
 
-        public T GetById<T>(long id, bool includeDeleted = false, params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
+        public T GetById<T>(long id, params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
         {
-            var set = _context.ReaderSet<T>(includeDeleted).Where(entity => entity.Id == id);
+            var set = _context.ReaderSet<T>().Where(entity => entity.Id == id);
             if (includeExpression.Any())
                 set = includeExpression.Aggregate(set, (current, variable) => current.Include(variable));
             return set.FirstOrDefault();
         }
 
-        public T GetByIdAsNoTracking<T>(long id, bool includeDeleted = false, params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
+        public T GetByIdAsNoTracking<T>(long id, params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
         {
-            var set = _context.ReaderSet<T>(includeDeleted).Where(entity => entity.Id == id).AsNoTracking();
+            var set = _context.ReaderSet<T>().Where(entity => entity.Id == id).AsNoTracking();
             if (includeExpression.Any())
                 set = includeExpression.Aggregate(set, (current, variable) => current.Include(variable));
             return set.FirstOrDefault();
         }
 
-        public IQueryable<T> Filter<T>(Expression<Func<T, bool>> query, bool includeDeleted = false,
+        public IQueryable<T> Filter<T>(Expression<Func<T, bool>> query,
             params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
         {
             if (query == null)
                 throw new SmartException("Query is null");
-            var set = _context.ReaderSet<T>(includeDeleted).Where(query);
+            var set = _context.ReaderSet<T>().Where(query);
             if (includeExpression.Any())
                 set = includeExpression.Aggregate(set, (current, variable) => current.Include(variable));
             return set;
         }
 
-        public IQueryable<T> FilterAsNoTracking<T>(Expression<Func<T, bool>> query, bool includeDeleted = false,
+        public IQueryable<T> FilterAsNoTracking<T>(Expression<Func<T, bool>> query,
             params Expression<Func<T, object>>[] includeExpression) where T : EntityBase
         {
             if (query == null)
                 throw new SmartException("Query is null");
-            var set = _context.ReaderSet<T>(includeDeleted).Where(query).AsNoTracking();
+            var set = _context.ReaderSet<T>().Where(query).AsNoTracking();
             if (includeExpression.Any())
                 set = includeExpression.Aggregate(set, (current, variable) => current.Include(variable));
             return set;
         }
 
         public IQueryable<T> FilterWithQuery<T>(Expression<Func<T, bool>> query,
-            Func<IQueryable<T>, IQueryable<T>> includeMembers, bool includeDeleted = false) where T : EntityBase
+            Func<IQueryable<T>, IQueryable<T>> includeMembers) where T : EntityBase
         {
-            var set = _context.ReaderSet<T>(includeDeleted).Where(query);
+            var set = _context.ReaderSet<T>().Where(query);
             var result = includeMembers(set);
             return result;
         }
@@ -252,11 +251,11 @@ namespace CleanArch.Infra.Data.Repositories
             }
         }
 
-        public async Task<bool> HardRemoveRange<T>(IList<long> ids, bool includeDeleted = false) where T : EntityBase
+        public async Task<bool> HardRemoveRange<T>(IList<long> ids) where T : EntityBase
         {
             try
             {
-                var entityToRemove = await Filter<T>(x => ids.Contains(x.Id), includeDeleted).ToListAsync();
+                var entityToRemove = await Filter<T>(x => ids.Contains(x.Id)).ToListAsync();
                 _context.WriterSet<T>().RemoveRange(entityToRemove);
                 return true;
             }
