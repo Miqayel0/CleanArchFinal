@@ -9,9 +9,9 @@ namespace CleanArch.Application.SeedData.Command
 {
     public class SeedDataCommandHandler : IRequestHandler<SeedDataCommand, bool>
     {
-        private readonly IAsyncRepository _repository;
+        private readonly IRepository _repository;
 
-        public SeedDataCommandHandler(IAsyncRepository repository)
+        public SeedDataCommandHandler(IRepository repository)
         {
             _repository = repository;
         }
