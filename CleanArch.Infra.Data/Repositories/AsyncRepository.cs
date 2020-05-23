@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CleanArch.Infra.Data.Repositories
 {
-    public class AsyncRepository : IAsyncRepository
+    public class AsyncRepository : IRepository
     {
         private readonly IApplicationDbContext _context;
         public AsyncRepository(IApplicationDbContext context)

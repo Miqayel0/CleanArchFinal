@@ -8,9 +8,9 @@ namespace CleanArch.Application.Languages.Commands.Create
 {
     public class CreateLanguageCommandHandler : IRequestHandler<CreateLanguageCommand, bool>
     {
-        private readonly IAsyncRepository _repository;
+        private readonly IRepository _repository;
 
-        public CreateLanguageCommandHandler(IAsyncRepository repository)
+        public CreateLanguageCommandHandler(IRepository repository)
         {
             _repository = repository;
         }

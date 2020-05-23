@@ -11,21 +11,19 @@ namespace CleanArch.WebAPI.Controllers
     //[Authorize]
     public class UserController : BaseController
     {
-        [Authorize(Policy = nameof(AppPermission.CanCreate))]
+        //[Authorize(Policy = Permission.Users.Create)]
         [HttpPost]
         public async Task<ActionResult<bool>> Create([FromBody] CreateUserCommand request)
         {
             return Ok(await Mediator.Send(request));
         }
 
-        [Authorize(Policy = nameof(AppPermission.CanModifyUser))]
         [HttpPost]
         public async Task<ActionResult<bool>> AddRole([FromBody] AddRoleToUserCommand request)
         {
             return Ok(await Mediator.Send(request));
         }
 
-        [Authorize(Policy = nameof(AppPermission.CanModifyUser))]
         [HttpPost]
         public async Task<ActionResult<bool>> AdminChnagePassword([FromBody] AdminChangePasswordCommand request)
         {

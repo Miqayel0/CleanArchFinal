@@ -1,6 +1,7 @@
-﻿using CleanArch.Application.Authentication.Handlers;
-using CleanArch.Application.Authentication.Requirements;
-using CleanArch.Application.Permissions;
+﻿using CleanArch.Application.Common.Authentication.Handlers;
+using CleanArch.Application.Common.Authentication.PolicyProviders;
+using CleanArch.Application.Common.Behaviours;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,19 +13,15 @@ namespace CleanArch.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
+            services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+            services.AddAuthorizationCore();
 
-            services.AddScoped<IAuthorizationHandler, CanModifyHandler>();
-            services.AddScoped<IAuthorizationHandler, CanCreateHandler>();
-
-            services.AddAuthorizationCore(options =>
-            {
-                options.AddPolicy(nameof(AppPermission.CanModifyUser), policy =>
-                    policy.Requirements.Add(new CanModifyRequirament()));
-                options.AddPolicy(nameof(AppPermission.CanCreate), policy =>
-                    policy.Requirements.Add(new CanCreateRequirament()));
-            });
-            
             return services;
         }
     }

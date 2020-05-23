@@ -8,5 +8,5 @@ namespace CleanArch.Domain.Identity
         public string Surname { get; set; }
         public string PictureUri { get; set; }
         public bool IsDeleted { get; set; }
-    } 
+    }
 }

@@ -1,11 +1,11 @@
-﻿using CleanArch.Domain.Interfaces;
+﻿using CleanArch.Domain.Identity;
+using CleanArch.Domain.Interfaces;
 using CleanArch.Infra.Data.Identity.Options;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CleanArch.Infra.Data.Services
@@ -19,7 +19,7 @@ namespace CleanArch.Infra.Data.Services
             ThrowIfInvalidOptions(_jwtOptions);
         }
 
-        public async Task<string> GenerateEncodedToken(string id, string userName, IEnumerable<string> roles)
+        public async Task<string> GenerateEncodedToken(string id, string userName, IEnumerable<string> roles, IEnumerable<string> roleClaims = null)
         {
             var claims = new List<Claim>
             {
@@ -32,6 +32,14 @@ namespace CleanArch.Infra.Data.Services
             foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
+            if (roleClaims != null)
+            {
+                foreach (var rolecClaime in roleClaims)
+                {
+                    claims.Add(new Claim(CustomClaimTypes.Permission, rolecClaime));
+                }
             }
 
             // Create the JWT security token and encode it.

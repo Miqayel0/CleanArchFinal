@@ -8,8 +8,6 @@ namespace CleanArch.Infra.Data.AppContexts.Config
     {
         public void Configure(EntityTypeBuilder<ApplicationRole> builder)
         {
-            var navigation = builder.Metadata.FindNavigation(nameof(ApplicationRole.PermissionRoles));
-            navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

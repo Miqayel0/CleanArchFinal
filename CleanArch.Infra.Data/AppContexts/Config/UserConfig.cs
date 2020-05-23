@@ -16,6 +16,7 @@ namespace CleanArch.Infra.Data.AppContexts.Config
             builder.Property(b => b.Surname)
                 .HasMaxLength(50)
                 .IsRequired();
+
         }
     }
 }

@@ -5,20 +5,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Permissions\Queries\**" />
+    <EmbeddedResource Remove="Permissions\Queries\**" />
+    <None Remove="Permissions\Queries\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Account\Queries\" />
-    <Folder Include="Permissions\Queries\" />
     <Folder Include="Roles\Queries\" />
     <Folder Include="Users\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ardalis.GuardClauses" Version="1.3.3" />
-    <PackageReference Include="FluentValidation" Version="8.6.1" />
-    <PackageReference Include="MediatR" Version="8.0.0" />
+    <PackageReference Include="Ardalis.GuardClauses" Version="1.5.0" />
+    <PackageReference Include="FluentValidation" Version="8.6.2" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="8.6.2" />
+    <PackageReference Include="MediatR" Version="8.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="3.1.4" />
   </ItemGroup>
 
   <ItemGroup>

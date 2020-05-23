@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CleanArch.Domain.Interfaces
 {
-    public interface IAsyncRepository : IDisposable
+    public interface IRepository : IDisposable
     {
         Task<IEnumerable<T>> GetAllAsync<T>(bool includeDeleted = false, params Expression<Func<T, object>>[] includeExpression) where T : EntityBase;
         Task<IEnumerable<T>> GetAllAsNoTrackingAsync<T>(bool includeDeleted = false, params Expression<Func<T, object>>[] includeExpression) where T : EntityBase;
