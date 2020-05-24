@@ -22,7 +22,6 @@ namespace CleanArch.Domain.Interfaces
         IQueryable<TEntity> ReaderSet<TEntity>() where TEntity : EntityBase;
         Task<int> SaveChangesAsync(CancellationToken token = default);
         int SaveChanges();
-        int SaveChangesWithoutTimeShtamp();
         DatabaseFacade Database { get; }
         EntityEntry Entry(object entity);
     }

@@ -7,8 +7,10 @@ using IdentityServer4.EntityFramework.Options;
 using MediatR;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -52,12 +54,22 @@ namespace CleanArch.Infra.Data.AppContexts
             return base.Set<TEntity>().AsQueryable();
         }
 
-        public override async Task<int> SaveChangesAsync(CancellationToken token = default)
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            var entities = ChangeTracker.Entries<EntityBase>();
+            var entities = ChangeTracker.Entries<EntityBase>().Where(x => x.State == EntityState.Added || x.State == EntityState.Modified);
+
+            AddTimeStamp(entities);
+
+            await _mediator.DispatchDomainEventsAsync(entities, cancellationToken).ConfigureAwait(false);
+
+            return await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        public void AddTimeStamp(IEnumerable<EntityEntry<EntityBase>> entities)
+        {
             string currentUserId = _identityService.UserIdentity;
 
-            foreach (var entity in entities.Where(x => x.State == EntityState.Added || x.State == EntityState.Modified))
+            foreach (var entity in entities)
             {
                 if (entity.State == EntityState.Added)
                 {
@@ -67,34 +79,9 @@ namespace CleanArch.Infra.Data.AppContexts
                 entity.Entity.UpdatedDt = DateTime.UtcNow;
                 entity.Entity.UpdatedBy = currentUserId;
             }
-
-            int result = await base.SaveChangesAsync(token).ConfigureAwait(false);
-
-            var entitiesWithEvents = entities
-            .Where(e => e.Entity.Events.Any())
-            .Select(e => e.Entity)
-            .ToArray();
-
-            foreach (var entity in entitiesWithEvents)
-            {
-                var events = entity.Events.ToArray();
-                entity.Events.Clear();
-
-                foreach (var domainEvent in events)
-                {
-                    await _mediator.Publish(domainEvent).ConfigureAwait(false);
-                }
-            }
-
-            return result;
         }
 
         public override int SaveChanges()
-        {
-            return base.SaveChanges();
-        }
-
-        public int SaveChangesWithoutTimeShtamp()
         {
             return base.SaveChanges();
         }

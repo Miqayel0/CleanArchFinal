@@ -1,4 +1,5 @@
 ﻿using CleanArch.Domain.Entities.CategoryAggregation;
+using CleanArch.Domain.Events;
 using CleanArch.Domain.Interfaces;
 using System.Collections.Generic;
 
@@ -8,7 +9,8 @@ namespace CleanArch.Domain.Entities.ProductAggregation
     {
         public string Name { get; }
         public string Description { get; }
-        public string PictureUri { get; }
+        public string Photo { get; }
+        public decimal DiscountedPrice { get; private set; }
         public decimal UnitPrice { get; }
         public long CategoryId { get; }
         public virtual Category Category { get; }
@@ -19,19 +21,27 @@ namespace CleanArch.Domain.Entities.ProductAggregation
             string description,
             string pictureUri,
             decimal unitPrice,
+            decimal discount,
             long categoryId,
             List<ProductTranslation> translations)
         {
             Name = name;
             Description = description;
-            PictureUri = pictureUri;
+            Photo = pictureUri;
             UnitPrice = unitPrice;
+            Discount = discount;
             CategoryId = categoryId;
             _translations = translations;
         }
 
         public Product()
         {
+        }
+
+        public void Discount(decimal price)
+        {
+            DiscountedPrice = price;
+            AddDomainEvent(new ProductDiscountedEvent(this));
         }
 
         #region Privete fields
