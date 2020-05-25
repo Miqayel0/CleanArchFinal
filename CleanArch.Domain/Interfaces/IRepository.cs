@@ -21,6 +21,7 @@ namespace CleanArch.Domain.Interfaces
         Task<T> GetAndCheckWithAssignerWithQueryAsync<T>(long entityId, string assignerId, Func<IQueryable<T>, IQueryable<T>> includeMembers) where T : EntityBase;
 
         IQueryable<T> Filter<T>(Expression<Func<T, bool>> query, params Expression<Func<T, object>>[] includeExpression) where T : EntityBase;
+        IQueryable<T> GetAll<T>(params Expression<Func<T, object>>[] includeExpression) where T : EntityBase;
 
         Task<T> Create<T>(T entity) where T : EntityBase;
         Task<bool> Remove<T>(long id) where T : EntityBase;

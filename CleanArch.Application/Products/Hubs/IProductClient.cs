@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace CleanArch.Application.Products.Commands.Hubs
+namespace CleanArch.Application.Products.Hubs
 {
     public interface IProductClient
     {

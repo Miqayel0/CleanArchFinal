@@ -1,4 +1,5 @@
 ﻿using CleanArch.Domain.Events;
+using MediatR;
 using System;
 using System.Collections.Generic;
 
@@ -13,16 +14,15 @@ namespace CleanArch.Domain.Entities
         public DateTime UpdatedDt { get; set; }
         public bool IsDeleted { get; set; }
 
-        private List<BaseDomainEvent> _domainEvents;
-        public IReadOnlyCollection<BaseDomainEvent> DomainEvents => _domainEvents?.AsReadOnly();
+        private List<INotification> _domainEvents = new List<INotification>();
+        public IReadOnlyCollection<INotification> DomainEvents => _domainEvents?.AsReadOnly();
 
-        public void AddDomainEvent(BaseDomainEvent eventItem)
+        public void AddDomainEvent(INotification eventItem)
         {
-            _domainEvents ??= new List<BaseDomainEvent>();
             _domainEvents.Add(eventItem);
         }
 
-        public void RemoveDomainEvent(BaseDomainEvent eventItem)
+        public void RemoveDomainEvent(INotification eventItem)
         {
             _domainEvents?.Remove(eventItem);
         }

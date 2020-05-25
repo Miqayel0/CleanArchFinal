@@ -1,6 +1,6 @@
 using CleanArch.Application;
 using CleanArch.Application.Account.Commands.Login;
-using CleanArch.Application.Products.Commands.Hubs;
+using CleanArch.Application.Products.Hubs;
 using CleanArch.Infra.Data;
 using CleanArch.Infra.Data.AppContexts;
 using CleanArch.WebAPI.Filters;

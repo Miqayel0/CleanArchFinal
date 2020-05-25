@@ -16,6 +16,8 @@ namespace CleanArch.Infra.Data.AppContexts.Config
             builder.Property(x => x.UnitPrice)
                 .IsRequired(true)
                 .HasColumnType("decimal(18,2)");
+            builder.Property(x => x.DiscountedPrice)
+                    .HasColumnType("decimal(18,2)");
             builder.Property(b => b.Name)
                 .HasMaxLength(100)
                 .IsRequired();

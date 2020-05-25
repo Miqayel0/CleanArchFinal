@@ -29,7 +29,7 @@ namespace CleanArch.Domain.Entities.ProductAggregation
             Description = description;
             Photo = pictureUri;
             UnitPrice = unitPrice;
-            Discount = discount;
+            DiscountedPrice = discount;
             CategoryId = categoryId;
             _translations = translations;
         }
@@ -41,7 +41,7 @@ namespace CleanArch.Domain.Entities.ProductAggregation
         public void Discount(decimal price)
         {
             DiscountedPrice = price;
-            AddDomainEvent(new ProductDiscountedEvent(this));
+            AddDomainEvent(new ProductDiscountedDomainEvent(this));
         }
 
         #region Privete fields

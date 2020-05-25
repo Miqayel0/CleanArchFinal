@@ -12,6 +12,7 @@ namespace CleanArch.Application.Products.Commands.Create
         public long CategoryId { get; set; }
 
         public List<CreateProductTranslationDto> Translations { get; set; }
+        public decimal DiscountedPrice { get; internal set; }
     }
 
     public class CreateProductTranslationDto

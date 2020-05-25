@@ -1,12 +1,13 @@
 ﻿using CleanArch.Domain.Entities.ProductAggregation;
+using MediatR;
 
 namespace CleanArch.Domain.Events
 {
-    public class ProductDiscountedEvent : BaseDomainEvent
+    public class ProductDiscountedDomainEvent : INotification
     {
         public Product DiscountedProduct { get; private set; }
 
-        public ProductDiscountedEvent(Product discountedProduct)
+        public ProductDiscountedDomainEvent(Product discountedProduct)
         {
             DiscountedProduct = discountedProduct;
         }

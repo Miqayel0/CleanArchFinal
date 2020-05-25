@@ -34,6 +34,7 @@ namespace CleanArch.Application.Products.Commands.Create
                 request.Description,
                 request.PictureUri,
                 request.UnitPrice,
+                request.DiscountedPrice,
                 request.CategoryId,
                 translations);
 

@@ -1,6 +1,6 @@
-﻿using CleanArch.Application.Products.Commands.Events;
-using CleanArch.Application.Products.Commands.Hubs;
+﻿using CleanArch.Application.Products.Hubs;
 using CleanArch.Application.Roles;
+using CleanArch.Domain.Events;
 using CleanArch.Domain.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CleanArch.Application.Products.EventHandlers
 {
-    public class ProductEventsHandler : INotificationHandler<ProductDiscountedEvent>
+    public class ProductEventsHandler : INotificationHandler<ProductDiscountedDomainEvent>
     {
         private readonly IHubContext<ProductHub, IProductClient> _hubContext;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -22,11 +22,15 @@ namespace CleanArch.Application.Products.EventHandlers
             _userManager = userManager;
         }
 
-        public async Task Handle(ProductDiscountedEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(ProductDiscountedDomainEvent notification, CancellationToken cancellationToken)
         {
             var users = await _userManager.GetUsersInRoleAsync(Role.User.ToString());
             var userIds = users.Select(x => x.Id).ToList();
-            await _hubContext.Clients.Users(userIds).ProductDiscounted(new { Id = notification.DiscountedProduct.Id, Price = notification.DiscountedProduct.UnitPrice });
+            await _hubContext.Clients.Users(userIds).ProductDiscounted(new
+            {
+                ProductId = notification.DiscountedProduct.Id,
+                Price = notification.DiscountedProduct.UnitPrice
+            });
         }
     }
 }
