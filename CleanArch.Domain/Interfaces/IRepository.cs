@@ -23,14 +23,14 @@ namespace CleanArch.Domain.Interfaces
         IQueryable<T> Filter<T>(Expression<Func<T, bool>> query, params Expression<Func<T, object>>[] includeExpression) where T : EntityBase;
         IQueryable<T> GetAll<T>(params Expression<Func<T, object>>[] includeExpression) where T : EntityBase;
 
-        Task<T> Create<T>(T entity) where T : EntityBase;
+        Task<T> Create<T>(T entity, CancellationToken cancellationToken = default) where T : EntityBase;
         Task<bool> Remove<T>(long id) where T : EntityBase;
         Task<bool> RemoveRange<T>(IList<long> ids) where T : EntityBase;
         Task<bool> HardRemove<T>(long id) where T : EntityBase;
         Task<bool> HardRemoveRange<T>(IList<long> ids) where T : EntityBase;
         Task<bool> Update<T>(T entity) where T : EntityBase;
         Task<bool> UpdateRange<T>(IEnumerable<T> entities) where T : EntityBase;
-        Task<bool> CreateRange<T>(IList<T> entities) where T : EntityBase;
+        Task<bool> CreateRange<T>(IList<T> entities, CancellationToken cancellationToken = default) where T : EntityBase;
 
         Task CompleteAsync(CancellationToken cancellationToken = default);
         void Complete();

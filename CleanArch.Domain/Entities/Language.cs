@@ -16,7 +16,7 @@ namespace CleanArch.Domain.Entities
             Name = name;
         }
 
-        public Language()
+        private Language()
         {
         }
 

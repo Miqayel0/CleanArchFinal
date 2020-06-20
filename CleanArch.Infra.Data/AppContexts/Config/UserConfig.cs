@@ -8,6 +8,9 @@ namespace CleanArch.Infra.Data.AppContexts.Config
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
+            var navigation = builder.Metadata.FindNavigation(nameof(ApplicationUser.Orders));
+            navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
+
             builder.HasIndex(x => x.Name);
             builder.HasIndex(x => x.Surname);
             builder.Property(b => b.Name)
@@ -15,8 +18,7 @@ namespace CleanArch.Infra.Data.AppContexts.Config
                 .IsRequired();
             builder.Property(b => b.Surname)
                 .HasMaxLength(50)
-                .IsRequired();
-
+                .IsRequired();           
         }
     }
 }

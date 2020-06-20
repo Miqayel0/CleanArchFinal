@@ -15,6 +15,7 @@ namespace CleanArch.Infra.Data.Repositories
     public class AsyncRepository : IRepository
     {
         private readonly IApplicationDbContext _context;
+
         public AsyncRepository(IApplicationDbContext context)
         {
             _context = context;
@@ -85,7 +86,6 @@ namespace CleanArch.Infra.Data.Repositories
             return await set.ToListAsync();
         }
 
-
         public async Task<IEnumerable<T>> FilterWithQueryAsync<T>(Expression<Func<T, bool>> query,
             Func<IQueryable<T>, IQueryable<T>> includeMembers) where T : EntityBase
         {
@@ -101,7 +101,7 @@ namespace CleanArch.Infra.Data.Repositories
             return await result.FirstOrDefaultAsync() ?? throw new SmartException("You can not modify this entity because don't have suitable permissions!");
         }
 
-        #endregion
+        #endregion Async Read Part
 
         #region Sync Read Part
 
@@ -176,22 +176,21 @@ namespace CleanArch.Infra.Data.Repositories
             return result;
         }
 
-        #endregion
-
+        #endregion Sync Read Part
 
         #region CUD Part
 
-        public async Task<T> Create<T>(T entity) where T : EntityBase
+        public async Task<T> Create<T>(T entity, CancellationToken cancellationToken = default) where T : EntityBase
         {
-            await _context.WriterSet<T>().AddAsync(entity);
+            await _context.WriterSet<T>().AddAsync(entity, cancellationToken);
             return entity;
         }
 
-        public async Task<bool> CreateRange<T>(IList<T> entity) where T : EntityBase
+        public async Task<bool> CreateRange<T>(IList<T> entity, CancellationToken cancellationToken = default) where T : EntityBase
         {
             try
             {
-                await _context.WriterSet<T>().AddRangeAsync(entity);
+                await _context.WriterSet<T>().AddRangeAsync(entity, cancellationToken);
                 return true;
             }
             catch (Exception)
@@ -261,7 +260,6 @@ namespace CleanArch.Infra.Data.Repositories
             }
             catch (Exception)
             {
-
                 return false;
             }
         }
@@ -277,7 +275,6 @@ namespace CleanArch.Infra.Data.Repositories
             {
                 return false;
             }
-
         }
 
         public async Task<bool> UpdateRange<T>(IEnumerable<T> entities) where T : EntityBase
@@ -291,10 +288,9 @@ namespace CleanArch.Infra.Data.Repositories
             {
                 return false;
             }
-
         }
 
-        #endregion
+        #endregion CUD Part
 
         public void Dispose()
         {

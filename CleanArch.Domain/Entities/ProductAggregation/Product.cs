@@ -34,7 +34,7 @@ namespace CleanArch.Domain.Entities.ProductAggregation
             _translations = translations;
         }
 
-        public Product()
+        private Product()
         {
         }
 
@@ -48,6 +48,6 @@ namespace CleanArch.Domain.Entities.ProductAggregation
 
         private readonly List<ProductTranslation> _translations = new List<ProductTranslation>();
 
-        #endregion
+        #endregion Privete fields
     }
 }

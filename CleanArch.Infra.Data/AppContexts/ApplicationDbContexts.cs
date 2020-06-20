@@ -1,5 +1,6 @@
 ﻿using CleanArch.Domain.Entities;
 using CleanArch.Domain.Entities.CategoryAggregation;
+using CleanArch.Domain.Entities.OrderAggregation;
 using CleanArch.Domain.Entities.ProductAggregation;
 using CleanArch.Domain.Identity;
 using CleanArch.Domain.Interfaces;
@@ -37,6 +38,8 @@ namespace CleanArch.Infra.Data.AppContexts
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<CategoryTranslation> CategoryTranslations { get; set; }
         public virtual DbSet<Language> Languages { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderItem> OrderItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

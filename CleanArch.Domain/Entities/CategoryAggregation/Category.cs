@@ -20,7 +20,7 @@ namespace CleanArch.Domain.Entities.CategoryAggregation
             __translations = translations;
         }
 
-        public Category()
+        private Category()
         {
         }
 
