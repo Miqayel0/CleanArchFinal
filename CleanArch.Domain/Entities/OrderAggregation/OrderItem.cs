@@ -1,4 +1,5 @@
-﻿using CleanArch.Domain.Entities.ProductAggregation;
+﻿using Ardalis.GuardClauses;
+using CleanArch.Domain.Entities.ProductAggregation;
 
 namespace CleanArch.Domain.Entities.OrderAggregation
 {
@@ -17,6 +18,11 @@ namespace CleanArch.Domain.Entities.OrderAggregation
 
         public OrderItem(decimal unitPrice, int units, long productId)
         {
+
+            Guard.Against.NegativeOrZero(unitPrice, nameof(unitPrice));
+            Guard.Against.NegativeOrZero(units, nameof(units));
+            Guard.Against.NegativeOrZero(productId, nameof(productId));
+
             UnitPrice = unitPrice;
             Units = units;
             ProductId = productId;

@@ -1,4 +1,5 @@
-﻿using CleanArch.Domain.Identity;
+﻿using Ardalis.GuardClauses;
+using CleanArch.Domain.Identity;
 using CleanArch.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -34,16 +35,27 @@ namespace CleanArch.Domain.Entities.OrderAggregation
         }
 
         public Order(
-            string buyerId, Address shipToAddress, List<OrderItem> items, DateTime? finishDt,
+            string buyerId, Address shipToAddress, DateTime? finishDt,
             OrderStatus status, decimal deliveryFee)
         {
+            var totalPrice = CalculateTotal();
+            Guard.Against.NullOrWhiteSpace(buyerId, nameof(buyerId));
+            Guard.Against.Null(shipToAddress, nameof(shipToAddress));
+            Guard.Against.Default(shipToAddress, nameof(shipToAddress));
+            Guard.Against.NegativeOrZero(deliveryFee, nameof(deliveryFee));
+            Guard.Against.NegativeOrZero(totalPrice, nameof(totalPrice));
+
             BuyerId = buyerId;
             ShipToAddress = shipToAddress;
-            _orderItems = items;
             FinishDt = finishDt;
             Status = status;
             DeliveryFee = deliveryFee;
-            TotalPrice = CalculateTotal();
+            TotalPrice = totalPrice;
+        }
+
+        public void AddOrderItem(decimal unitPrice, int units, long productId)
+        {
+            _orderItems.Add(new OrderItem(unitPrice, units, productId));
         }
 
         #region Private fields

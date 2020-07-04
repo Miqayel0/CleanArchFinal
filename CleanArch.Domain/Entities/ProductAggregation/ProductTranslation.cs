@@ -1,4 +1,6 @@
-﻿namespace CleanArch.Domain.Entities.ProductAggregation
+﻿using Ardalis.GuardClauses;
+
+namespace CleanArch.Domain.Entities.ProductAggregation
 {
     public class ProductTranslation : EntityBase
     {
@@ -12,6 +14,10 @@
 
         public ProductTranslation(string propertyKey, string propertyValue, long languageId)
         {
+            Guard.Against.NullOrEmpty(propertyKey, nameof(propertyKey));
+            Guard.Against.NullOrEmpty(propertyValue, nameof(propertyValue));
+            Guard.Against.NegativeOrZero(languageId, nameof(languageId));
+
             PropertyKey = propertyKey;
             PropertyValue = propertyValue;
             LanguageId = languageId;

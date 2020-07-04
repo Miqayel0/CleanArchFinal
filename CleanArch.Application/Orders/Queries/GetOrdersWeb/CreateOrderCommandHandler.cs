@@ -3,7 +3,6 @@ using CleanArch.Domain.Entities.OrderAggregation;
 using CleanArch.Domain.Entities.ProductAggregation;
 using CleanArch.Domain.Interfaces;
 using MediatR;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,20 +22,16 @@ namespace CleanArch.Application.Orders.Queries.GetOrdersWeb
         {
             Guard.Against.NullOrEmpty(_identityService.UserIdentity, "UserId");
 
-            var items = new List<OrderItem>();
             var shippingAddress = new Address(request.Street, request.City, request.State, request.Country, request.ZipCode);
+            var order = new Order(_identityService.UserIdentity, shippingAddress, request.FinishDt, OrderStatus.Pending, 500);
 
             foreach (var item in request.BasketItems)
             {
                 var product = await _repository.GetByIdAsync<Product>(item.ProductId);
-                Guard.Against.NegativeOrZero(item.ProductId, nameof(item.ProductId));
-                Guard.Against.NegativeOrZero(item.Units, nameof(item.Units));
                 Guard.Against.Null(product, nameof(Product));
 
-                items.Add(new OrderItem(product.UnitPrice, item.Units, item.ProductId));
+                order.AddOrderItem(product.UnitPrice, item.Units, item.ProductId);
             }
-
-            var order = new Order(_identityService.UserIdentity, shippingAddress, items, request.FinishDt,OrderStatus.Pending, 500);
 
             await _repository.Create(order);
             await _repository.CompleteAsync(cancellationToken);

@@ -1,4 +1,5 @@
-﻿using CleanArch.Domain.Entities.CategoryAggregation;
+﻿using Ardalis.GuardClauses;
+using CleanArch.Domain.Entities.CategoryAggregation;
 using CleanArch.Domain.Events;
 using CleanArch.Domain.Interfaces;
 using System.Collections.Generic;
@@ -22,22 +23,30 @@ namespace CleanArch.Domain.Entities.ProductAggregation
             string pictureUri,
             decimal unitPrice,
             decimal discount,
-            long categoryId,
-            List<ProductTranslation> translations)
+            long categoryId)
         {
+            Guard.Against.NullOrEmpty(name, nameof(name));
+            Guard.Against.NullOrEmpty(description, nameof(description));
+            Guard.Against.NullOrEmpty(name, nameof(name));
+            Guard.Against.NegativeOrZero(discount, nameof(discount));
+            Guard.Against.NegativeOrZero(categoryId, nameof(categoryId));
+
             Name = name;
             Description = description;
             Photo = pictureUri;
             UnitPrice = unitPrice;
             DiscountedPrice = discount;
             CategoryId = categoryId;
-            _translations = translations;
         }
 
         private Product()
         {
         }
 
+        public void AddTranslation(string propertyKey, string propertyValue, long languageId)
+        {
+            _translations.Add(new ProductTranslation(propertyKey, propertyValue, languageId));
+        }
         public void Discount(decimal price)
         {
             DiscountedPrice = price;

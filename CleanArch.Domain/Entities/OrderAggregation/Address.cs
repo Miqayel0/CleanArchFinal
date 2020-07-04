@@ -1,4 +1,6 @@
-﻿namespace CleanArch.Domain.Entities.OrderAggregation
+﻿using Ardalis.GuardClauses;
+
+namespace CleanArch.Domain.Entities.OrderAggregation
 {
     public class Address
     {
@@ -16,6 +18,11 @@
 
         public Address(string street, string city, string state, string country, string zipcode)
         {
+            Guard.Against.NullOrWhiteSpace(street, nameof(street));
+            Guard.Against.NullOrWhiteSpace(city, nameof(city));
+            Guard.Against.NullOrWhiteSpace(country, nameof(country));
+            Guard.Against.NullOrWhiteSpace(zipcode, nameof(zipcode));
+
             Street = street;
             City = city;
             State = state;

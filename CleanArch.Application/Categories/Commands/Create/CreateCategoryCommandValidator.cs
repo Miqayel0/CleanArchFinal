@@ -7,6 +7,7 @@ namespace CleanArch.Application.Categories.Commands.Create
         public CreateCategoryCommandValidator()
         {
             RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x => x.Translations).NotEmpty();
         }
     }
 }

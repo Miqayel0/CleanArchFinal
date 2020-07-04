@@ -18,25 +18,17 @@ namespace CleanArch.Application.Products.Commands.Create
 
         public async Task<bool> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-            var translations = new List<ProductTranslation>();
+            var product = new Product(request.Name,
+                                      request.Description,
+                                      request.PictureUri,
+                                      request.UnitPrice,
+                                      request.DiscountedPrice,
+                                      request.CategoryId);
 
             foreach (var item in request.Translations)
             {
-                Guard.Against.NullOrEmpty(item.PropertyKey, nameof(item.PropertyKey));
-                Guard.Against.NullOrEmpty(item.PropertyValue, nameof(item.PropertyValue));
-                Guard.Against.NegativeOrZero(item.LanguageId, nameof(item.LanguageId));
-
-                translations.Add(new ProductTranslation(item.PropertyKey, item.PropertyValue, item.LanguageId));
+                product.AddTranslation(item.PropertyKey, item.PropertyValue, item.LanguageId);
             }
-
-            var product = new Product(
-                request.Name,
-                request.Description,
-                request.PictureUri,
-                request.UnitPrice,
-                request.DiscountedPrice,
-                request.CategoryId,
-                translations);
 
             await _repository.Create(product);
             await _repository.CompleteAsync(cancellationToken);
