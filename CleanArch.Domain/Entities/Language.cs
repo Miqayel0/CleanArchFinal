@@ -8,7 +8,7 @@ namespace CleanArch.Domain.Entities
 {
     public class Language : EntityBase, IAggregateRoot
     {
-        public string Name { get; }
+        public string Name { get; private set; }
         public IReadOnlyCollection<ProductTranslation> ProductTranslations => _productTranslations.AsReadOnly();
         public IReadOnlyCollection<CategoryTranslation> CategoryTranslations => _categoryTranslations.AsReadOnly();
 

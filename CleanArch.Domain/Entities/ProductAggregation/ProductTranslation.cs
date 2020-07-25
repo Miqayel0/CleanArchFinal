@@ -5,12 +5,12 @@ namespace CleanArch.Domain.Entities.ProductAggregation
     public class ProductTranslation : EntityBase
     {
 
-        public string PropertyKey { get; }
-        public string PropertyValue { get; }
-        public long ProductId { get; }
-        public long LanguageId { get; }
-        public virtual Language Language { get; }
-        public virtual Product Product { get; }
+        public string PropertyKey { get; private set; }
+        public string PropertyValue { get; private set; }
+        public long ProductId { get; private set; }
+        public long LanguageId { get; private set; }
+        public virtual Language Language { get; private set; }
+        public virtual Product Product { get; private set; }
 
         public ProductTranslation(string propertyKey, string propertyValue, long languageId)
         {

@@ -8,13 +8,13 @@ namespace CleanArch.Domain.Entities.ProductAggregation
 {
     public class Product : EntityBase, IAggregateRoot
     {
-        public string Name { get; }
-        public string Description { get; }
-        public string Photo { get; }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public string Photo { get; private set; }
         public decimal DiscountedPrice { get; private set; }
-        public decimal UnitPrice { get; }
-        public long CategoryId { get; }
-        public virtual Category Category { get; }
+        public decimal UnitPrice { get; private set; }
+        public long CategoryId { get; private set; }
+        public virtual Category Category { get; private set; }
         public IReadOnlyCollection<ProductTranslation> Translations => _translations.AsReadOnly();
 
         public Product(
@@ -28,7 +28,6 @@ namespace CleanArch.Domain.Entities.ProductAggregation
             Guard.Against.NullOrEmpty(name, nameof(name));
             Guard.Against.NullOrEmpty(description, nameof(description));
             Guard.Against.NullOrEmpty(name, nameof(name));
-            Guard.Against.NegativeOrZero(discount, nameof(discount));
             Guard.Against.NegativeOrZero(categoryId, nameof(categoryId));
 
             Name = name;

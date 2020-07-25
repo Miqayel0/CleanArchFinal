@@ -21,6 +21,8 @@ namespace CleanArch.Infra.Data.AppContexts.Config
             builder.Property(b => b.Name)
                 .HasMaxLength(100)
                 .IsRequired();
+            builder.Property(b => b.Description)
+                .IsRequired();
             builder.HasOne(x => x.Category)
                 .WithMany(x => x.Products)
                 .HasForeignKey(x => x.CategoryId);

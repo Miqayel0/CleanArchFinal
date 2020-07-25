@@ -20,7 +20,7 @@ namespace CleanArch.Application.Products.Queries.GetAllProductsWeb
         public async Task<GetAllProductsListModelWeb> Handle(GetAllProductsWebQuery request, CancellationToken cancellationToken)
         {
             var query = _repository.GetAll<Product>();
-            var count = await query.CountAsync(cancellationToken);
+            var count = query.Count();
             var list = await query.Select(x => new GetAllProductWebDto
             {
                 Category = x.Category.Name,

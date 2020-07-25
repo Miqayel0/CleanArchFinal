@@ -16,8 +16,7 @@ namespace CleanArch.Application.Common.Exceptions
         public ValidationException(IEnumerable<ValidationFailure> failures)
             : this()
         {
-            var failureGroups = failures
-                .GroupBy(e => e.PropertyName, e => e.ErrorMessage);
+            var failureGroups = failures.GroupBy(e => e.PropertyName, e => e.ErrorMessage);
 
             foreach (var failureGroup in failureGroups)
             {

@@ -5,12 +5,12 @@ namespace CleanArch.Domain.Entities.CategoryAggregation
     public class CategoryTranslation : EntityBase
     {
 
-        public string PropertyKey { get; }
-        public string PropertyValue { get; }
-        public long CategoryId { get; }
-        public long LanguageId { get; }
-        public virtual Language Language { get; }
-        public virtual Category Category { get; }
+        public string PropertyKey { get; private set; }
+        public string PropertyValue { get; private set; }
+        public long CategoryId { get; private set; }
+        public long LanguageId { get; private set; }
+        public virtual Language Language { get; private set; }
+        public virtual Category Category { get; private set; }
 
         public CategoryTranslation(string propertyKey, string propertyValue, long languageId)
         {

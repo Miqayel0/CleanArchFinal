@@ -7,14 +7,14 @@ namespace CleanArch.Domain.Entities.CategoryAggregation
 {
     public class Category : EntityBase, IAggregateRoot
     {
-        public string Name { get; }
-        public long? ParentId { get; }
-        public Category Parent { get; }
+        public string Name { get; private set; }
+        public long? ParentId { get; private set; }
+        public Category Parent { get; private set; }
         public IReadOnlyCollection<Category> Children => _children.AsReadOnly();
         public IReadOnlyCollection<Product> Products => _products.AsReadOnly();
         public IReadOnlyCollection<CategoryTranslation> Translations => _translations.AsReadOnly();
 
-        public Category(string name, long? parentId)
+        public Category(string name, long? parentId = null)
         {
             Guard.Against.NullOrWhiteSpace(name, nameof(name));
 
