@@ -6,7 +6,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CleanArch.Application.Orders.Queries.GetOrdersWeb
+namespace CleanArch.Application.Orders.Queries.Create
 {
     public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, bool>
     {

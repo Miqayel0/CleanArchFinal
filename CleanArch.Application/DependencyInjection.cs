@@ -1,6 +1,7 @@
 ﻿using CleanArch.Application.Common.Authentication.Handlers;
 using CleanArch.Application.Common.Authentication.PolicyProviders;
 using CleanArch.Application.Common.Behaviours;
+using CleanArch.Application.Test;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -19,6 +20,7 @@ namespace CleanArch.Application
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
             services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            services.AddScoped<ITestService, TestService>();
             services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
             services.AddAuthorizationCore();
 

@@ -31,23 +31,5 @@ namespace CleanArch.WebAPI.Controllers
         {
             return Ok(await Mediator.Send(request));
         }
-
-        //[HttpPost]
-        //public async Task<ActionResult> ExternalLogin(string provider, string returnUrl)
-        //{
-        //    var returUri = Url.Action(nameof(ExternalLoginCallback), "Account", new { returnUrl });
-        //    var properties = _signinManager.ConfigureExternalAuthenticationProperties(provider, returnUrl);
-        //    return Challenge(properties, provider);
-        //}
-
-        //public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
-        //{
-        //    var info = await _signinManager.GetExternalLoginInfoAsync();
-        //    var signin = await _signinManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
-        //    var user = new ApplicationUser { UserName = info.Principal.FindFirst(ClaimTypes.Name.Replace(" ", "_")).Value };
-        //    var userResult = await _userManager.CreateAsync(user);
-        //    await _userManager.AddLoginAsync(user, info);
-        //    return null;
-        //}
     }
 }

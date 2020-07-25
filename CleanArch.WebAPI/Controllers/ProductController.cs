@@ -7,17 +7,18 @@ using System.Threading.Tasks;
 
 namespace CleanArch.WebAPI.Controllers
 {
-    //[Authorize(Policy = nameof(AppPermission.CanCreate))]
     public class ProductController : BaseController
     {
+        [Authorize(Policy = Permission.Products.Create)]
         [HttpPost]
         public async Task<ActionResult<bool>> Create([FromBody] CreateProductCommand request)
         {
             return Ok(await Mediator.Send(request));
         }
 
+        [Authorize(Policy = Permission.Products.View)]
         [HttpGet]
-        public async Task<ActionResult<bool>> GetAllProductsWeb([FromQuery] GetAllProductsWebQuery request)
+        public async Task<ActionResult<GetAllProductsListModelWeb>> GetAllProductsWeb([FromQuery] GetAllProductsWebQuery request)
         {
             return Ok(await Mediator.Send(request));
         }

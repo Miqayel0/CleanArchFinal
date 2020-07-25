@@ -307,10 +307,5 @@ namespace CleanArch.Infra.Data.Repositories
         {
             _context.SaveChanges();
         }
-
-        public IApplicationDbContext GetContext()
-        {
-            return _context;
-        }
     }
 }

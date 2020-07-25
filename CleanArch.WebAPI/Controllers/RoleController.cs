@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 
 namespace CleanArch.WebAPI.Controllers
 {
-    //[Authorize(Policy = nameof(AppPermission.CanCreate))]
     public class RoleController : BaseController
     {
+        [Authorize(Policy = Permission.Roles.Create)]
         [HttpPost]
         public async Task<ActionResult<bool>> Create([FromBody] CreateRoleCommand request)
         {
             return Ok(await Mediator.Send(request));
         }
 
+        [Authorize(Policy = Permission.Roles.Edit)]
         [HttpPost]
         public async Task<IActionResult> AddClaimToRole([FromBody] AddClaimToRoleCommand request)
         {

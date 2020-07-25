@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CleanArch.WebAPI.Controllers
 {
-    //[Authorize(Policy = nameof(AppPermission.CanCreate))]
     public class CategoryController : BaseController
     {
+        [Authorize(Policy = Permission.Categories.Create)]
         [HttpPost]
         public async Task<ActionResult<bool>> Create([FromBody] CreateCategoryCommand request)
         {

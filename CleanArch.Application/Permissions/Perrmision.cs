@@ -4,10 +4,28 @@
     {
         public static class Products
         {
+            public const string Create = "Perm.Products.Create";
             public const string View = "Perm.Products.View";
             public const string Edit = "Perm.Products.Edit";
             public const string Delete = "Perm.Products.Delete";
         }
+
+        public static class Categories
+        {
+            public const string Create = "Perm.Products.Create";
+            public const string View = "Perm.Categories.View";
+            public const string Edit = "Perm.Categories.Edit";
+            public const string Delete = "Perm.Categories.Delete";
+        }
+
+        public static class Languages
+        {
+            public const string Create = "Perm.Languages.Create";
+            public const string View = "Perm.Languages.View";
+            public const string Edit = "Perm.Languages.Edit";
+            public const string Delete = "Perm.Languages.Delete";
+        }
+
 
         public static class Users
         {

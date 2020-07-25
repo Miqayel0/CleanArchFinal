@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NSwag;
 using NSwag.Generation.Processors.Security;
+using Serilog;
 using System.Linq;
 
 namespace CleanArch.WebAPI
@@ -66,7 +67,7 @@ namespace CleanArch.WebAPI
             app.UseHttpsRedirection();
             app.UseOpenApi();
             app.UseSwaggerUi3();
-
+            app.UseSerilogRequestLogging();
             app.UseRouting();
 
             app.UseAuthentication();

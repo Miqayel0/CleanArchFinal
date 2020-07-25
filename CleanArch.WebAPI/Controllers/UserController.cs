@@ -8,22 +8,23 @@ using System.Threading.Tasks;
 
 namespace CleanArch.WebAPI.Controllers
 {
-    //[Authorize]
     public class UserController : BaseController
     {
-        //[Authorize(Policy = Permission.Users.Create)]
+        [Authorize(Policy = Permission.Users.Create)]
         [HttpPost]
         public async Task<ActionResult<bool>> Create([FromBody] CreateUserCommand request)
         {
             return Ok(await Mediator.Send(request));
         }
 
+        [Authorize(Policy = Permission.Roles.Edit)]
         [HttpPost]
         public async Task<ActionResult<bool>> AddRole([FromBody] AddRoleToUserCommand request)
         {
             return Ok(await Mediator.Send(request));
         }
 
+        [Authorize(Policy = Permission.Roles.Edit)]
         [HttpPost]
         public async Task<ActionResult<bool>> AdminChnagePassword([FromBody] AdminChangePasswordCommand request)
         {

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -12,7 +12,8 @@
 
   <ItemGroup>
     <Folder Include="Account\Queries\" />
-    <Folder Include="Orders\Commands\Create\" />
+    <Folder Include="Orders\Queries\GetOrdersWeb\" />
+    <Folder Include="Products\Commands\Create\" />
     <Folder Include="Roles\Queries\" />
     <Folder Include="Users\Queries\" />
   </ItemGroup>

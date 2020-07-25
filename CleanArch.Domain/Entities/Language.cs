@@ -1,4 +1,5 @@
-﻿using CleanArch.Domain.Entities.CategoryAggregation;
+﻿using Ardalis.GuardClauses;
+using CleanArch.Domain.Entities.CategoryAggregation;
 using CleanArch.Domain.Entities.ProductAggregation;
 using CleanArch.Domain.Interfaces;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace CleanArch.Domain.Entities
 
         public Language(string name)
         {
+            Guard.Against.NullOrWhiteSpace(name,nameof(name));
+
             Name = name;
         }
 

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace CleanArch.Application.Orders.Queries.GetOrdersWeb
+namespace CleanArch.Application.Orders.Queries.Create
 {
     public class CreateOrderCommand : IRequest<bool>
     {
